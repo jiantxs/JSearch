@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/css/bs/bootstrap.min.css">
+    {{block 'head'}}{{/block}}
+    <link rel="shortcut icon" href="/icon.ico" type="image/x-icon">
+</head>
+
+<body>
+    {{block 'content'}}{{/block}}
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bs/bootstrap.min.js"></script>
+    {{block 'js'}}{{/block}}
+</body>
+
+</html>

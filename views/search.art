@@ -1,0 +1,342 @@
+{{extend './template/main.art'}}
+
+{{block 'head'}}
+<style>
+    nav {
+        height: 100px;
+        margin-bottom: 0px;
+        border-bottom: 1px solid gray;
+    }
+
+    .search-container {
+        margin-top: 15px;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+        position: relative;
+    }
+
+    .search-input {
+        width: 450px;
+        height: 55px;
+        border-radius: 24px;
+        padding: 0 44px;
+        font-size: 16px;
+        border: 1px solid #dfe1e5;
+        transition: all 0.3s ease;
+        box-shadow: none;
+    }
+
+    .search-input:hover,
+    .search-input:focus {
+        box-shadow: 0 1px 6px rgba(32, 33, 36, .28);
+        border-color: rgba(223, 225, 229, 0);
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #4285f4;
+        font-size: 20px;
+    }
+
+
+    .search-link {
+        text-align: left;
+        font-size: larger;
+    }
+
+    .p-link {
+        text-align: left;
+        font-size: smaller;
+        color: grey;
+    }
+
+    .link-des {
+        text-align: left;
+        font-size: smaller;
+        color: gray;
+    }
+
+
+    .search-block {
+        margin: 50px auto;
+    }
+
+    .s-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background-color: white;
+        z-index: 999;
+    }
+
+    .suggestions-item:hover {
+        background-color: grey;
+    }
+
+    .autocomplete-container{
+        position: fixed;
+        top: 100px;
+        left: 150px;
+        z-index: 999;
+    }
+</style>
+{{/block}}
+
+
+{{block 'content'}}
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary s-nav">
+    <div class="row">
+        <img class="navbar-brand col-2" style="width: 100px;" src="/image/text.png" alt="JSearch">
+
+        <div class="col-8" role="search">
+
+            <div class="search-container">
+                <!-- 搜索图标 -->
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+
+                <!-- 搜索输入框 -->
+                <input type="text" id="search-input" class="form-control search-input"
+                    placeholder="在 JSearch 上搜索，或者输入网址" autofocus>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+<div class="autocomplete-container">
+    <ul class="list-group" id="suggestions-list">
+        <!-- <li class="list-group-item suggestions-item" style="height: 40px;">
+                            <p>搜索1</p>
+                        </li> -->
+    </ul>
+</div>
+
+
+<!-- {{q}}
+        {{ok}}
+        {{page}}
+        {{results}}
+        {{error}}
+        {{title}} -->
+
+<div class="card text-center container-fluid" style="margin-top: 15px;">
+    <div style="height: 80px;">
+
+    </div>
+    <div class="card-header row">
+        <ul class="nav nav-pills card-header-pills">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">全部</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">图片</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" aria-disabled="true">视频</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div>
+            {{each obj.results}}
+            <div class="row search-block">
+                <div class="row">
+                    <img src="" alt="img" class="web-icon rounded-circle col-2" style="width: 70px;height: 50px;">
+                    <div class="col-10">
+                        <div class="row"><a href={{$value.link}} class="col-12 search-link">{{$value.title}}</a></div>
+                        <div class="row">
+                            <p class="p-link h6">{{$value.link}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="col-10 link-des">{{$value.snippet}}</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="row">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link prev-page" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link page-jump" href="#">1</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">2</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">3</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">4</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">5</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">6</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">7</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">8</a></li>
+                <li class="page-item"><a class="page-link page-jump" href="#">9</a></li>
+                <li class="page-item">
+                    <a class="page-link next-page" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+{{/block}}
+
+
+{{block 'js'}}
+
+<imgMessage>
+    {{each obj.results}}
+    {{$value.pagemap}}fgiekdfcvtbuknfc5vtkbn
+    {{/each}}
+</imgMessage>
+
+<qMessage>{{obj.q}}</qMessage>
+<pageMessage>{{obj.page}}</pageMessage>
+
+<script type="module">
+    import { searchHint } from '/js/searchHint.js'
+    $(document).ready(function () {
+        let message = $('imgMessage').html();
+        $('imgMessage').remove();
+
+
+        let obj = {};
+        obj.q = $('qMessage').html()
+        $('qMessage').remove()
+        obj.page = $('pageMessage').html()
+        $('pageMessage').remove()
+
+
+        let parseLevel = 0
+
+        let imgs = []
+
+        let parseMessage = message.split('fgiekdfcvtbuknfc5vtkbn')
+
+        parseMessage.forEach(function (item) {
+            parseLevel += 1
+            if (parseLevel >= parseMessage.length) return
+            try {
+                let r = JSON.parse(item)
+                let src = '';
+                if (r.cse_thumbnail && r.cse_thumbnail[0] && r.cse_thumbnail[0].src) {
+                    src = r.cse_thumbnail[0].src;
+                } else if (r.metatags && r.metatags[0] && r.metatags[0]['og:image']) {
+                    src = r.metatags[0]['og:image'];
+                }
+
+                if (src) {
+                    imgs.push('/imgp/?q=' + src.replace(/^https?:\/\//, ''));
+                } else {
+                    imgs.push("");
+                }
+            } catch (e) {
+                imgs.push("");
+            }
+
+        })
+
+        parseLevel = null
+        parseMessage = null
+
+        $('.web-icon').each(function (index) {
+            $(this).attr('src', imgs[index])
+            if ($(this).attr('src') == "") {
+                $(this).remove()
+            }
+        }).on('error', function () {
+            $(this).remove()
+        })
+
+
+        $('.page-jump').each(function (index) {
+            $(this).attr('href', '/?q=' + obj.q + '&page=' + $(this).text());
+            if ($(this).html() == obj.page) {
+                $(this).addClass('active')
+            }
+        })
+
+        $('.prev-page').attr('href', '/?q=' + obj.q + '&page=' + (parseInt(obj.page) - 1));
+        $('.next-page').attr('href', '/?q=' + obj.q + '&page=' + (parseInt(obj.page) + 1));
+        if (parseInt(obj.page) == 1) {
+            $('.prev-page').addClass('disabled')
+        }
+        if (parseInt(obj.page) == 9) {
+            $('.next-page').addClass('disabled')
+        }
+
+
+        let isComposing = false
+
+
+
+        $('.search-input')
+            .on('keydown', function (e) {
+                const $input = $(this);
+                let searchTerm = $input.val();
+
+                switch (e.which) {
+                    case 13: // 回车
+                        e.preventDefault();
+                        if (searchTerm.length > 0) location.href = '/?q=' + encodeURI(searchTerm);
+                        break;
+                }
+            })
+            .on('input', function (e) {
+                const $input = $(this)
+                let searchTerm = $input.val()
+                if (!isComposing) {
+                    triggerAutocomplete(searchTerm);
+                }
+            })
+            .on('compositionstart', function (e) {
+                isComposing = true
+            })
+            .on('compositionend', function (e) {
+                isComposing = false
+                triggerAutocomplete($(this).val());
+            });
+
+
+
+
+
+        // 自动补全函数（保持原逻辑不变）
+        function triggerAutocomplete(term) {
+            if (term.length > 0) {
+                searchHint(encodeURI(term)).then(res => {
+                    $('#suggestions-list').empty();
+                    res.forEach(item => {
+                        $('#suggestions-list').append(
+                            `<li class="list-group-item suggestions-item" style="height:40px;width:400px;"><p>${item}</p></li>`
+                        );
+                    });
+                    $('.suggestions-item').click(function (e) {
+                        location.href = '/?q=' + encodeURI($(this).text());
+                    })
+                });
+            } else {
+                $('#suggestions-list').empty();
+            }
+        }
+
+    })
+
+
+
+
+</script>
+{{/block}}

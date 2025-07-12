@@ -1,0 +1,63 @@
+{{extend './template/main.art'}}
+
+
+{{block 'head'}}
+{{/block}}
+
+
+{{block 'content'}}
+<div class="container min-vh-100 d-flex align-items-center">
+    <div class="row justify-content-center w-100">
+        <div class="col-12 col-md-8 col-lg-6 text-center">
+            <!-- 错误图标动画 -->
+            <div class="mb-4 error-icon animate-float">
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="#dc3545"
+                    class="bi bi-x-octagon-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M11.46.146A.5.5 0 0 0 11.107 0H4.893a.5.5 0 0 0-.353.146L.146 4.54A.5.5 0 0 0 0 4.893v6.214a.5.5 0 0 0 .146.353l4.394 4.394a.5.5 0 0 0 .353.146h6.214a.5.5 0 0 0 .353-.146l4.394-4.394a.5.5 0 0 0 .146-.353V4.893a.5.5 0 0 0-.146-.353L11.46.146zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                </svg>
+            </div>
+
+            <!-- 主内容 -->
+            <h1 class="display-4 fw-bold text-danger mb-3">500 服务器错误</h1>
+            <p class="lead text-muted mb-4">哎呀！好像哪里出问题了...<br>作者收到警报，正在全力修复中！</p>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 浮动动画 */
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    /* 优化移动端显示 */
+    @media (max-width: 768px) {
+        .display-4 {
+            font-size: 2.5rem;
+        }
+
+        .error-icon svg {
+            width: 80px;
+            height: 80px;
+        }
+    }
+</style>
+{{/block}}
+
+
+{{block 'js'}}
+{{/block}}

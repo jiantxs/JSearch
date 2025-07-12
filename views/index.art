@@ -1,0 +1,128 @@
+{{extend './template/main.art'}}
+
+
+{{block 'head'}}
+<link rel="stylesheet" href="/css/style.css">
+{{/block}}
+
+{{block 'content'}}
+<div class="container">
+
+    <div class="row" style="height: 150px;">
+
+    </div>
+
+    <div class="row">
+        <div class="col-4"></div>
+        <img class="col-4" src="/image/text.png" alt="JSearch">
+        <div class="col-4"></div>
+    </div>
+
+    <div class="row">
+        <div class="search-container">
+            <!-- 搜索图标 -->
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+
+            <!-- 搜索输入框 -->
+            <input type="text" id="search-input" class="form-control search-input" placeholder="在 JSearch 上搜索，或者输入网址"
+                autofocus>
+
+        </div>
+    </div>
+
+
+    <div id="suggestions" class=" row">
+        <div class="col-3"></div>
+        <!-- 建议列表 -->
+        <div class="col-6">
+            <ul class="list-group" id="suggestions-list">
+                <!-- <li class="list-group-item suggestions-item" style="height: 40px;">
+                    <p>搜索1</p>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+{{/block}}
+
+
+{{block 'js'}}
+<script type="module">
+    import { searchHint } from '/js/searchHint.js'
+    $(document).ready(function () {
+
+
+
+        // 自动聚焦到输入框
+        $('.search-input').focus()
+
+
+        let isComposing = false;
+
+        // 主监听逻辑优化
+        $('.search-input')
+            .on('keydown', function (e) {
+                const $input = $(this);
+                let searchTerm = $input.val();
+
+                switch (e.which) {
+                    case 13: // 回车
+                        e.preventDefault();
+                        if (searchTerm.length > 0) location.href = '/?q=' + encodeURI(searchTerm);
+                        break;
+                }
+            })
+            .on('input', function (e) {
+                const $input = $(this)
+                let searchTerm = $input.val()
+                if (!isComposing) {
+                    triggerAutocomplete(searchTerm);
+                }
+            })
+            .on('compositionstart', function (e) {
+                isComposing = true
+            })
+            .on('compositionend', function (e) {
+                isComposing = false
+                triggerAutocomplete($(this).val());
+            });
+
+
+
+
+
+        // 自动补全函数（保持原逻辑不变）
+        function triggerAutocomplete(term) {
+            if (term.length > 0) {
+                searchHint(encodeURI(term)).then(res => {
+                    $('#suggestions-list').empty();
+                    res.forEach(item => {
+                        $('#suggestions-list').append(
+                            `<li class="list-group-item suggestions-item" style="height:40px;"><p>${item}</p></li>`
+                        );
+                    });
+                    $('.suggestions-item').click(function (e) {
+                    location.href = '/?q=' + encodeURI($(this).text());
+                })
+                });
+            } else {
+                $('#suggestions-list').empty();
+            }
+        }
+
+
+
+
+
+
+
+
+
+    });
+</script>
+{{/block}}

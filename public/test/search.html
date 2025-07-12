@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能搜索框</title>
+  <link rel="stylesheet" href="../css/bs/bootstrap.min.css">
+  <style>
+    /* 自定义提示词下拉框样式 */
+    .suggestion-box {
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none; /* 默认隐藏 */
+      position: absolute;
+      width: 100%;
+      background: #fff;
+      z-index: 1000;
+    }
+    .suggestion-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .suggestion-item.active,
+    .suggestion-item:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2>智能搜索框</h2>
+    <div class="position-relative">
+      <input type="text" id="search-input" class="form-control" autocomplete="off" placeholder="请输入搜索内容...">
+      <div id="suggestions" class="suggestion-box"></div>
+    </div>
+  </div>
+  
+  <!-- 引入 jQuery -->
+  <script src="../js/jquery.min.js"></script>
+  <!-- 引入 Bootstrap Bundle JS -->
+  <script src="../js/bs/bootstrap.bundle.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      // 模拟搜索建议数据
+      var searchData = ["苹果", "香蕉", "橙子", "梨子", "葡萄", "菠萝", "草莓", "西瓜", "火龙果", "芒果"];
+      var $input = $("#search-input");
+      var $suggestions = $("#suggestions");
+      var selectedIndex = -1;
+      
+      // 根据输入过滤建议
+      function filterSuggestions(query) {
+        return searchData.filter(function(item) {
+          return item.indexOf(query) !== -1;
+        });
+      }
+      
+      // 渲染建议列表
+      function renderSuggestions(suggestions) {
+        $suggestions.empty();
+        if (suggestions.length === 0) {
+          $suggestions.hide();
+          return;
+        }
+        suggestions.forEach(function(item, index){
+          var suggestionItem = $("<div>")
+            .addClass("suggestion-item")
+            .addClass
+            .text(item)
+            .attr("data-index", index);
+          $suggestions.append(suggestionItem);
+        });
+        $suggestions.show();
+      }
+      
+      // 输入框事件：实时显示建议
+      $input.on("input", function(){
+        var query = $(this).val();
+        selectedIndex = -1;
+        if (query.trim() === "") {
+          $suggestions.hide();
+          return;
+        }
+        var filtered = filterSuggestions(query);
+        renderSuggestions(filtered);
+      });
+      
+      // 键盘导航支持：上下箭头与回车确认
+      $input.on("keydown", function(e){
+        var items = $suggestions.children(".suggestion-item");
+        if (e.key === "ArrowDown") {
+          if (selectedIndex < items.length - 1) {
+            selectedIndex++;
+            items.removeClass("active");
+            $(items[selectedIndex]).addClass("active");
+          }
+          e.preventDefault();
+        } else if (e.key === "ArrowUp") {
+          if (selectedIndex > 0) {
+            selectedIndex--;
+            items.removeClass("active");
+            $(items[selectedIndex]).addClass("active");
+          }
+          e.preventDefault();
+        } else if (e.key === "Enter") {
+          if (selectedIndex >= 0) {
+            $input.val($(items[selectedIndex]).text());
+            $suggestions.hide();
+            e.preventDefault();
+          }
+        }
+      });
+      
+      // 鼠标点击选择建议
+      $suggestions.on("click", ".suggestion-item", function(){
+        $input.val($(this).text());
+        $suggestions.hide();
+      });
+      
+      // 点击页面其他区域时隐藏提示框
+      $(document).on("click", function(e) {
+        if (!$(e.target).closest("#search-input").length && !$(e.target).closest("#suggestions").length) {
+          $suggestions.hide();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

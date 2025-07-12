@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索引擎结果展示</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* 自定义样式 */
+        .search-result {
+            margin-bottom: 20px;
+        }
+
+        .site-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .site-url {
+            margin-right: 5px;
+        }
+
+        .card-title a {
+            text-decoration: none;
+            color: #1a0dab;
+        }
+
+        .card-title a:hover {
+            text-decoration: underline;
+        }
+
+        .summary-text {
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .seo-details {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .seo-sharing {
+            float: right;
+            font-size: 16px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">搜索结果</h1>
+        <div id="searchResults"></div>
+    </div>
+
+    <script>
+        // 模拟搜索结果数据
+        const searchData = [
+            {
+                logo: "https://example.com/tmobile-logo.png",
+                url: "https://www.t-mobile.com",
+                title: "T-Mobile® Official Site: Get Even More Without Paying More",
+                summary: "Switch to T-Mobile & save big! Get 20% off vs. Verizon & AT&T – plus enjoy up to $800 when you switch 4 lines today.",
+                buttons: ["Phones & devices", "Plans", "Connect by T-Mobile", "Refer A Friend"]
+            },
+            {
+                logo: "https://example.com/twitter-logo.png",
+                url: "https://www.twitter.com",
+                title: "Tantek (@t) / X",
+                summary: "The best independent webdesign, webdev, inspiration conf in Europe. Get a ticket: https://btc0.nf/t and come to IndieWebCamp too.",
+                followCount: "68.2K"
+            },
+            {
+                logo: "https://example.com/twitch-logo.png",
+                url: "https://www.twitch.tv",
+                title: "Twitch",
+                summary: "Twitch is an interactive livestreaming service for content spanning gaming, entertainment, sports, music, and more. There’s something for everyone on ...",
+            },
+            {
+                logo: "https://example.com/yahoo-logo.png",
+                url: "https://finance.yahoo.com",
+                title: "AT&T Inc. (T) Stock Price, News, Quote & History",
+                summary: "Find the latest AT&T Inc. (T) stock quote, history, news and other vital information to help you with your stock trading and investing.",
+            },
+            {
+                logo: "https://example.com/att-logo.png",
+                url: "https://www.att.com",
+                title: "AT&T Official Site | Our Best Wireless & Internet Service",
+                summary: "Shop deals on new phones, including iPhone 16 & Galaxy S25, unlimited data plans & AT&T Fiber. Get ..."
+            }
+        ];
+
+        $(document).ready(function() {
+            const resultsContainer = $('#searchResults');
+
+            searchData.forEach(result => {
+                // 构建标志栏
+                let logoHtml = `<img src="${result.logo}" alt="Site Logo" class="site-logo" data-bs-toggle="tooltip" data-bs-placement="top" title="${result.url}">`;
+                logoHtml += `<span class="site-url">${result.url}</span>`;
+
+                // 分割线和分享图标
+                logoHtml += `<span class="seo-sharing">·</span>`;
+
+                // 如果有粉丝数，则显示
+                if (result.followCount) {
+                    logoHtml += `<span class="seo-details">${result.followCount} followers</span>`;
+                }
+
+                // 构建卡片内容
+                let cardContent = `
+                    <div class="card search-result mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                ${logoHtml}
+                            </div>
+                            <h5 class="card-title">
+                                <a href="${result.url}" target="_blank">${result.title}</a>
+                            </h5>
+                            <div class="summary-text">${result.summary}</div>
+                `;
+
+                // 如果有按钮，则添加
+                if (result.buttons) {
+                    cardContent += `
+                        <div class="mt-2">
+                            ${result.buttons.map(button => `<button class="btn btn-outline-primary mx-1">${button}</button>`).join('')}
+                        </div>
+                    `;
+                }
+
+                cardContent += `
+                        </div>
+                    </div>
+                `;
+
+                // 将卡片内容插入到容器中
+                resultsContainer.append(cardContent);
+            });
+
+            // 启用 Bootstrap Tooltip
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>搜索结果显示 - 你想活出怎样的人生</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .search-card {
+            transition: transform 0.2s;
+            margin-bottom: 1.5rem;
+        }
+        .search-card:hover {
+            transform: translateY(-3px);
+        }
+        .display-link {
+            color: #0d6efd;
+            font-size: 0.9rem;
+        }
+        .snippet-text {
+            color: #4a4a4a;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="mb-4">"你想活出怎样的人生" 搜索结果</h1>
+        <div id="searchResults"></div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const searchData = {
+            // 这里替换为实际的搜索结果数据
+            "results": [
+                {
+                    "title": "你想活出怎样的人生- 维基百科，自由的百科全书",
+                    "link": "https://zh.wikipedia.org/zh-hans/蒼鷺與少年",
+                    "displayLink": "zh.wikipedia.org",
+                    "snippet": "电影原文片名是引用自小说家吉野源三郎在1937年发表的著书《你想活出怎样的人生》，内容则为宫崎骏原创。剧情讲述少年牧真人在母亲因火灾丧生后与一只会说话的苍鹭相遇，展开...",
+                    "formattedUrl": "https://zh.wikipedia.org/zh-hans/蒼鷺與少年"
+                },
+                // 其他搜索结果项...
+            ]
+        };
+
+        $(document).ready(function() {
+            const resultsContainer = $('#searchResults');
+            
+            searchData.results.forEach(result => {
+                const card = `
+                    <div class="card search-card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="${result.link}" class="text-decoration-none" target="_blank">
+                                    ${result.title}
+                                </a>
+                            </h5>
+                            <div class="display-link mb-2">${result.formattedUrl}</div>
+                            <p class="card-text snippet-text">${result.snippet}</p>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.append(card);
+            });
+        });
+    </script>
+</body>
+</html>
