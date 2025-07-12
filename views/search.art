@@ -207,7 +207,7 @@
 <pageMessage>{{obj.page}}</pageMessage>
 
 <script type="module">
-    import { searchHint } from '/js/searchHint.js'
+    import { searchHint } from '/js2/searchHint.js'
     $(document).ready(function () {
         let message = $('imgMessage').html();
         $('imgMessage').remove();
