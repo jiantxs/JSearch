@@ -7,7 +7,7 @@ JSearch是一个基于nodejs和google custom search api的开源搜索引擎。
 1.docker安装
 
 ```
-docker run -v path_to_your_dir:/app/logs -v path_to_your_dir:/js/config.js -p 3000:3000 -e SEARCH_API_KEY='' -e SEARCH_CX='' -e SEARCH_HINT='' -e PORT=3000 --name jsearch --restart=unless-stopped -d jiantxs/jsearch
+docker run -v /app/logs:path_to_your_dir/logs -v /app/js:path_to_your_dir/js -p 3000:3000 -e SEARCH_API_KEY='' -e SEARCH_CX='' -e SEARCH_HINT='' -e PORT=3000 --name jsearch --restart=unless-stopped -d jiantxs/jsearch
 ```
 
 2.本地安装
