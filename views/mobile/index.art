@@ -4,18 +4,18 @@
 {{block 'head'}}
 <style>
     .search-container {
-        max-width: 768px;
+        width: 100%;
         margin: 100px auto;
         margin-bottom: 0px;
         position: relative;
     }
 
     .search-input {
-        height: 55px;
+        height: 95px;
         border-radius: 24px;
+        font-size: 40px;
         padding: 0 44px;
-        font-size: 16px;
-        border: 1px solid #dfe1e5;
+        border: 10px solid #dfe1e5;
         transition: all 0.3s ease;
         box-shadow: none;
     }
@@ -41,28 +41,23 @@
         background-color: grey;
     }
 
+
     .footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
         background-color: aliceblue;
         margin-bottom: 0px;
-        z-index: -1;
     }
 </style>
 {{/block}}
 
 {{block 'content'}}
-<div class="container">
+<div class="container-fluid">
 
-    <div class="row" style="height: 150px;">
+    <div class="row" style="height: 60px;">
 
     </div>
 
     <div class="row">
-        <div class="col-4"></div>
-        <img class="col-4" src="/image/text.png" alt="JSearch">
-        <div class="col-4"></div>
+        <img class="col-12" src="/image/text.png" alt="JSearch">
     </div>
 
     <div class="row">
@@ -82,9 +77,9 @@
 
 
     <div id="suggestions" class=" row">
-        <div class="col-3"></div>
+        <div class="col-1"></div>
         <!-- 建议列表 -->
-        <div class="col-6">
+        <div class="col-10">
             <ul class="list-group" id="suggestions-list">
                 <!-- <li class="list-group-item suggestions-item" style="height: 40px;">
                     <p>搜索1</p>
@@ -93,7 +88,9 @@
         </div>
     </div>
 
+    <div style="height: 80px;">
 
+    </div>
     <footer class="container-fluid footer">
         <div class="row">
             <p class="col-4 text-center">
@@ -125,6 +122,7 @@
             </p>
         </div>
     </footer>
+
 
 </div>
 {{/block}}
@@ -182,7 +180,7 @@
                     $('#suggestions-list').empty();
                     res.forEach(item => {
                         $('#suggestions-list').append(
-                            `<li class="list-group-item suggestions-item" style="height:40px;"><p>${item}</p></li>`
+                            `<li class="list-group-item suggestions-item" style="height:65px;font-size:40px"><p>${item}</p></li>`
                         );
                     });
                     $('.suggestions-item').click(function (e) {

@@ -16,11 +16,11 @@
     }
 
     .search-input {
-        width: 450px;
-        height: 55px;
+        width: 100%;
+        height: 85px;
         border-radius: 24px;
         padding: 0 44px;
-        font-size: 16px;
+        font-size: 40px;
         border: 1px solid #dfe1e5;
         transition: all 0.3s ease;
         box-shadow: none;
@@ -44,7 +44,7 @@
 
     .search-link {
         text-align: left;
-        font-size: larger;
+        font-size: 30px;
     }
 
     .p-link {
@@ -57,6 +57,7 @@
         text-align: left;
         font-size: smaller;
         color: gray;
+        font-size: 25px;
     }
 
 
@@ -65,7 +66,7 @@
     }
 
     .s-nav {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
@@ -76,13 +77,26 @@
 
     .suggestions-item:hover {
         background-color: grey;
+        width: 100%;
     }
 
     .autocomplete-container {
-        position: fixed;
-        top: 100px;
-        left: 150px;
+        width: 90%;
+        position: absolute;
+        top: calc(100vw/2 - 80px);
+        left: 10px;
         z-index: 999;
+    }
+
+    .greyed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: calc(100vw/2);
+        background-color: white;
+        z-index: 10;
+        border-bottom: gray solid 1px;
     }
 
     .footer {
@@ -96,27 +110,29 @@
 
 {{block 'content'}}
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary s-nav">
-    <div class="row">
-        <img class="navbar-brand col-2" style="width: 100px;" src="/image/text.png" alt="JSearch">
+<div class="greyed">
 
-        <div class="col-8" role="search">
+</div>
 
-            <div class="search-container">
-                <!-- 搜索图标 -->
-                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="currentColor"
-                        d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                </svg>
+<div class="container-fluid s-nav" style="height: 0px;">
+    <div class="search-container">
+        <div class="row">
+            <div class="col-1"></div>
+            <img class="col-10" src="/image/text.png" alt="JSearch">
+        </div>
+        <div class="row">
+            <!-- 搜索图标 -->
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
 
-                <!-- 搜索输入框 -->
-                <input type="text" id="search-input" class="form-control search-input"
-                    placeholder="在 JSearch 上搜索，或者输入网址" autofocus>
-            </div>
-
+            <!-- 搜索输入框 -->
+            <input type="text" id="search-input" class="form-control search-input" placeholder="在 JSearch 上搜索，或者输入网址"
+                autofocus>
         </div>
     </div>
-</nav>
+</div>
 
 <div class="autocomplete-container">
     <ul class="list-group" id="suggestions-list">
@@ -135,7 +151,7 @@
         {{title}} -->
 
 <div class="card text-center container-fluid" style="margin-top: 15px;">
-    <div style="height: 80px;">
+    <div style="height: calc(100vw/2);">
 
     </div>
     <div class="card-header row">
@@ -165,7 +181,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <p class="col-10 link-des">{{$value.snippet}}</p>
+                    <p class="col-12 link-des">{{$value.snippet}}</p>
                 </div>
             </div>
             {{/each}}
@@ -199,36 +215,36 @@
 </div>
 
 <footer class="container-fluid footer">
-        <div class="row">
-            <p class="col-4 text-center">
-                搜索限额: {{postMessage.snum}} / {{postMessage.slim}}
-            </p>
+    <div class="row">
+        <p class="col-4 text-center">
+            搜索限额: {{postMessage.snum}} / {{postMessage.slim}}
+        </p>
 
-            <p class="col-4 text-center">
-                自动补全限额: {{postMessage.hnum}} / {{postMessage.hlim}}
-            </p>
+        <p class="col-4 text-center">
+            自动补全限额: {{postMessage.hnum}} / {{postMessage.hlim}}
+        </p>
 
-            <p class="col-4 text-center">
-                刷新间隔：{{postMessage.itime}}h
-            </p>
-        </div>
-        <div class="row">
-            <p class="col-4 text-center">
-                周期请求：{{postMessage.rnum}}
-            </p>
-            <p class="col-4 text-center">
-                周期错误：{{postMessage.enum}}
-            </p>
-            <p class="col-4 text-center">
-                图片代理：{{postMessage.iprnum}}
-            </p>
-        </div>
-        <div class="row">
-            <p class="col-12 text-center" style="font-size: 15px;margin-bottom: 0px;">
-                JSearch 2025.7
-            </p>
-        </div>
-    </footer>
+        <p class="col-4 text-center">
+            刷新间隔：{{postMessage.itime}}h
+        </p>
+    </div>
+    <div class="row">
+        <p class="col-4 text-center">
+            周期请求：{{postMessage.rnum}}
+        </p>
+        <p class="col-4 text-center">
+            周期错误：{{postMessage.enum}}
+        </p>
+        <p class="col-4 text-center">
+            图片代理：{{postMessage.iprnum}}
+        </p>
+    </div>
+    <div class="row">
+        <p class="col-12 text-center" style="font-size: 15px;margin-bottom: 0px;">
+            JSearch 2025.7
+        </p>
+    </div>
+</footer>
 
 {{/block}}
 
@@ -359,7 +375,7 @@
                     $('#suggestions-list').empty();
                     res.forEach(item => {
                         $('#suggestions-list').append(
-                            `<li class="list-group-item suggestions-item" style="height:40px;width:400px;"><p>${item}</p></li>`
+                            `<li class="list-group-item suggestions-item" style="height:65px;width:100%;font-size:40px;"><p>${item}</p></li>`
                         );
                     });
                     $('.suggestions-item').click(function (e) {
