@@ -44,12 +44,12 @@
 
     .search-link {
         text-align: left;
-        font-size: 30px;
+        font-size: 45px;
     }
 
     .p-link {
         text-align: left;
-        font-size: smaller;
+        font-size: 20px;
         color: grey;
     }
 
@@ -57,12 +57,17 @@
         text-align: left;
         font-size: smaller;
         color: gray;
-        font-size: 25px;
+        font-size: 35px;
     }
+
+    
 
 
     .search-block {
         margin: 50px auto;
+        background-color:antiquewhite;
+        margin-left: 0px;
+        margin-right: 0px;
     }
 
     .s-nav {
@@ -73,6 +78,16 @@
         height: 100px;
         background-color: white;
         z-index: 999;
+    }
+
+    .nav-link{
+        font-size: 35px;
+    }
+
+    .page-link{
+        font-size: 55px;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     .suggestions-item:hover {
@@ -103,6 +118,10 @@
 
         background-color: aliceblue;
         margin-bottom: 0px;
+    }
+
+    .footer-p {
+        font-size: 30px;
     }
 </style>
 {{/block}}
@@ -172,7 +191,7 @@
             {{each obj.results}}
             <div class="row search-block">
                 <div class="row">
-                    <img src="" alt="img" class="web-icon rounded-circle col-2" style="width: 70px;height: 50px;">
+                    <img src="" alt="img" class="web-icon rounded-circle col-2" style="width: 70px;height: 70px;">
                     <div class="col-10">
                         <div class="row"><a href={{$value.link}} class="col-12 search-link">{{$value.title}}</a></div>
                         <div class="row">
@@ -216,31 +235,31 @@
 
 <footer class="container-fluid footer">
     <div class="row">
-        <p class="col-4 text-center">
+        <p class="col-4 text-center footer-p">
             搜索限额: {{postMessage.snum}} / {{postMessage.slim}}
         </p>
 
-        <p class="col-4 text-center">
+        <p class="col-4 text-center footer-p">
             自动补全限额: {{postMessage.hnum}} / {{postMessage.hlim}}
         </p>
 
-        <p class="col-4 text-center">
+        <p class="col-4 text-center footer-p">
             刷新间隔：{{postMessage.itime}}h
         </p>
     </div>
     <div class="row">
-        <p class="col-4 text-center">
+        <p class="col-4 text-center footer-p">
             周期请求：{{postMessage.rnum}}
         </p>
-        <p class="col-4 text-center">
+        <p class="col-4 text-center footer-p">
             周期错误：{{postMessage.enum}}
         </p>
-        <p class="col-4 text-center">
+        <p class="col-4 text-center footer-p">
             图片代理：{{postMessage.iprnum}}
         </p>
     </div>
     <div class="row">
-        <p class="col-12 text-center" style="font-size: 15px;margin-bottom: 0px;">
+        <p class="col-12 text-center footer-p" style="margin-bottom: 0px;">
             JSearch 2025.7
         </p>
     </div>
