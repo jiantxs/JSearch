@@ -147,7 +147,7 @@
             </svg>
 
             <!-- 搜索输入框 -->
-            <input type="text" id="search-input" class="form-control search-input" placeholder="在 JSearch 上搜索，或者输入网址"
+            <input type="text" autocomplete="off" id="search-input" class="form-control search-input" placeholder="在 JSearch 上搜索，或者输入网址"
                 autofocus>
         </div>
     </div>
